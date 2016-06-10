@@ -199,7 +199,7 @@ class PropelChoiceLoader implements ChoiceLoaderInterface
         if ($model instanceof \BaseObject) {
             return array($model->getPrimaryKey());
         }
-
+        
         return $model->getPrimaryKeys();
     }
 
