@@ -56,7 +56,7 @@ class TranslationFormListener implements EventSubscriberInterface
                 $options = array();
             }
 
-            $type = 'text';
+            $type = 'Symfony\Component\Form\Extension\Core\Type\TextType';
             if (array_key_exists('type', $options)) {
                 $type = $options['type'];
             }
