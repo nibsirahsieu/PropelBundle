@@ -202,7 +202,7 @@ class ModelType extends AbstractType
             return $choiceLabel;
         };
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'query' => null,
             'index_property' => null,
             'property' => null,
@@ -213,12 +213,12 @@ class ModelType extends AbstractType
             'choice_value' => $choiceValue,
             'choice_translation_domain' => false,
             'by_reference' => false,
-        ));
+        ]);
 
         $resolver->setRequired(array('class'));
         $resolver->setNormalizer('query', $queryNormalizer);
         $resolver->setNormalizer('choice_label', $choiceLabelNormalizer);
-        $resolver->setAllowedTypes('query', array('null', '\ModelCriteria'));
+        $resolver->setAllowedTypes('query', ['null', 'Propel\Runtime\ActiveQuery\ModelCriteria']);
     }
 
     /**
