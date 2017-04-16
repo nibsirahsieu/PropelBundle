@@ -36,11 +36,19 @@ class TranslationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName() 
+    {
+        return $this->getBlockPrefix();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix() 
     {
         return 'propel1_translation';
     }
-
+    
     /**
      * {@inheritdoc}
      */

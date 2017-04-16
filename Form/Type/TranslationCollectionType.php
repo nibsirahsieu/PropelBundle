@@ -45,7 +45,7 @@ class TranslationCollectionType extends AbstractType
      */
     public function getParent()
     {
-        return 'collection';
+        return 'Symfony\Component\Form\Extension\Core\Type\CollectionType';
     }
 
     /**
@@ -53,9 +53,14 @@ class TranslationCollectionType extends AbstractType
      */
     public function getName()
     {
-        return 'propel1_translation_collection';
+        return $this->getBlockPrefix();
     }
 
+    public function getBlockPrefix() 
+    {
+        return 'propel1_translation_collection';
+    }
+    
     /**
      * {@inheritdoc}
      */

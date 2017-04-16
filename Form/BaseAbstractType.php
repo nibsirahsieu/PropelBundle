@@ -3,6 +3,7 @@
 namespace Propel\Bundle\PropelBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 abstract class BaseAbstractType extends AbstractType
@@ -48,13 +49,23 @@ abstract class BaseAbstractType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults($this->options);
+        $this->configureOptions($resolver);
     }
 
+    public function configureOptions(OptionsResolver $resolver) 
+    {
+        $resolver->setDefaults($this->options);
+    }
+    
     /**
      * {@inheritdoc}
      */
     public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+    
+    public function getBlockPrefix() 
     {
         return $this->getOption('name');
     }
