@@ -38,11 +38,11 @@ class TranslationCollectionTypeTest extends TypeTestCase
             'data_class' => self::TRANSLATION_CLASS,
         ));
 
-        $builder->add('translatableItemI18ns', 'propel1_translation_collection', array(
+        $builder->add('translatableItemI18ns', 'Propel\Bundle\PropelBundle\Form\Type\TranslationCollectionType', array(
             'languages' => array('en', 'fr'),
             'options' => array(
                 'data_class' => self::TRANSLATABLE_I18N_CLASS,
-                'columns' => array('value', 'value2' => array('label' => 'Label', 'type' => 'textarea')),
+                'columns' => array('value', 'value2' => array('label' => 'Label', 'type' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType')),
             ),
         ));
         $form = $builder->getForm();
@@ -61,7 +61,7 @@ class TranslationCollectionTypeTest extends TypeTestCase
 
         $columnOptions = $translations['fr']->getConfig()->getOption('columns');
         $this->assertEquals('value', $columnOptions[0]);
-        $this->assertEquals('textarea', $columnOptions['value2']['type']);
+        $this->assertEquals('Symfony\Component\Form\Extension\Core\Type\TextareaType', $columnOptions['value2']['type']);
         $this->assertEquals('Label', $columnOptions['value2']['label']);
     }
 
@@ -74,7 +74,7 @@ class TranslationCollectionTypeTest extends TypeTestCase
         $builder = $this->factory->createBuilder('form', null, array(
             'data_class' => self::TRANSLATION_CLASS,
         ));
-        $builder->add('translatableItemI18ns', 'propel1_translation_collection', array(
+        $builder->add('translatableItemI18ns', 'Propel\Bundle\PropelBundle\Form\Type\TranslationCollectionType', array(
             'languages' => array('en', 'fr'),
             'options' => array(
                 'data_class' => self::TRANSLATABLE_I18N_CLASS,
@@ -98,11 +98,11 @@ class TranslationCollectionTypeTest extends TypeTestCase
         $builder = $this->factory->createBuilder('form', null, array(
             'data_class' => self::NON_TRANSLATION_CLASS,
         ));
-        $builder->add('value', 'propel1_translation_collection', array(
+        $builder->add('value', 'Propel\Bundle\PropelBundle\Form\Type\TranslationCollectionType', array(
             'languages' => array('en', 'fr'),
             'options' => array(
                 'data_class' => self::TRANSLATABLE_I18N_CLASS,
-                'columns' => array('value', 'value2' => array('label' => 'Label', 'type' => 'textarea')),
+                'columns' => array('value', 'value2' => array('label' => 'Label', 'type' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType')),
             ),
         ));
 
@@ -115,7 +115,7 @@ class TranslationCollectionTypeTest extends TypeTestCase
      */
     public function testNoDataClassAdded()
     {
-        $this->factory->createNamed('itemI18ns', 'propel1_translation_collection', null, array(
+        $this->factory->createNamed('itemI18ns', 'Propel\Bundle\PropelBundle\Form\Type\TranslationCollectionType', null, array(
             'languages' => array('en', 'fr'),
             'options' => array(
                 'columns' => array('value', 'value2'),
@@ -128,7 +128,7 @@ class TranslationCollectionTypeTest extends TypeTestCase
      */
     public function testNoLanguagesAdded()
     {
-        $this->factory->createNamed('itemI18ns', 'propel1_translation_collection', null, array(
+        $this->factory->createNamed('itemI18ns', 'Propel\Bundle\PropelBundle\Form\Type\TranslationCollectionType', null, array(
            'options' => array(
                'data_class' => self::TRANSLATABLE_I18N_CLASS,
                'columns' => array('value', 'value2'),
@@ -141,7 +141,7 @@ class TranslationCollectionTypeTest extends TypeTestCase
      */
     public function testNoColumnsAdded()
     {
-        $this->factory->createNamed('itemI18ns', 'propel1_translation_collection', null, array(
+        $this->factory->createNamed('itemI18ns', 'Propel\Bundle\PropelBundle\Form\Type\TranslationCollectionType', null, array(
             'languages' => array('en', 'fr'),
             'options' => array(
                 'data_class' => self::TRANSLATABLE_I18N_CLASS,
