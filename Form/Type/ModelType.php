@@ -176,9 +176,12 @@ class ModelType extends AbstractType
             }
             /** @var ColumnMap $firstIdentifier */
             $firstIdentifier = current($identifier);
-            if (count($identifier) === 1 && in_array($firstIdentifier->getPdoType(), [\PDO::PARAM_BOOL, \PDO::PARAM_INT, \PDO::PARAM_STR])) {
+            if (count($identifier) === 1 && in_array($firstIdentifier->getPdoType(), array(\PDO::PARAM_BOOL, \PDO::PARAM_INT, \PDO::PARAM_STR))) {
                 return function($object) use ($firstIdentifier) {
-                    return call_user_func(array($object, 'get' . ucfirst($firstIdentifier->getPhpName())));
+                    if ($object) {
+                        return call_user_func(array($object, 'get' . ucfirst($firstIdentifier->getPhpName())));
+                    }
+                    return null;
                 };
             }
             return null;
@@ -211,10 +214,13 @@ class ModelType extends AbstractType
                     $valueProperty = $options['property'];
                     /** @var ModelCriteria $query */
                     $query = $options['query'];
-                    $getter = 'get' . ucfirst($query->getTableMap()->getColumn($valueProperty)->getPhpName());
-
-                    $choiceLabel = function($choice) use ($getter) {
-                        return call_user_func(array($choice, $getter));
+                    $choiceLabel = function($choice) use ($valueProperty, $query) {
+                        $getter = 'get'.ucfirst($valueProperty);
+                        if (!method_exists($choice, $getter)) {
+                            $getter = 'get' . ucfirst($query->getTableMap()->getColumn($valueProperty)->getPhpName());
+                        }
+                        
+                        return call_user_func([$choice, $getter]);
                     };
                 }
             }
