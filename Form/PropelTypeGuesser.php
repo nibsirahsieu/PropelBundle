@@ -93,7 +93,7 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
                     $choices = $column->getValueSet();
                     $labels = array_map('ucfirst', $choices);
 
-                    return new TypeGuess('Symfony\Component\Form\Extension\Core\Type\ChoiceType', array('choices' => array_combine($choices, $labels)), Guess::MEDIUM_CONFIDENCE);
+                    return new TypeGuess('Symfony\Component\Form\Extension\Core\Type\ChoiceType', array('choices' => array_combine($labels, $choices), 'choices_as_values' => true), Guess::MEDIUM_CONFIDENCE);
                 }
             case \PropelColumnTypes::VARCHAR:
                 return new TypeGuess('Symfony\Component\Form\Extension\Core\Type\TextType', array(), Guess::MEDIUM_CONFIDENCE);
