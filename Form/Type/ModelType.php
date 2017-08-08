@@ -131,12 +131,13 @@ class ModelType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $choiceLoader = function (Options $options) {
+        $self = $this;
+        $choiceLoader = function (Options $options) use($self) {
             // Unless the choices are given explicitly, load them on demand
             if (null === $options['choices']) {
 
                 $propelChoiceLoader = new PropelChoiceLoader(
-                    $this->choiceListFactory,
+                    $self->getChoiceListFactory(),
                     $options['class'],
                     $options['query'],
                     $options['index_property']
@@ -248,6 +249,11 @@ class ModelType extends AbstractType
         $resolver->setAllowedTypes('query', array('null', '\ModelCriteria'));
     }
 
+    public function getChoiceListFactory()
+    {
+        return $this->choiceListFactory;
+    }
+    
     /**
      * {@inheritdoc}
      */
