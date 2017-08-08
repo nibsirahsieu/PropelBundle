@@ -220,7 +220,7 @@ class ModelType extends AbstractType
                             $getter = 'get' . ucfirst($query->getTableMap()->getColumn($valueProperty)->getPhpName());
                         }
                         
-                        return call_user_func([$choice, $getter]);
+                        return call_user_func(array($choice, $getter));
                     };
                 }
             }
