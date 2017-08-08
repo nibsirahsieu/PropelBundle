@@ -102,7 +102,7 @@ class PropelChoiceLoader implements ChoiceLoaderInterface
     public function loadChoicesForValues(array $values, $value = null)
     {
         // Performance optimization
-        if (empty($values)) {
+        if (empty($values) || (1 === count($values) && empty($values[0]))) {
             return array();
         }
 
