@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * PropelParamConverter
@@ -53,16 +52,6 @@ class PropelParamConverter implements ParamConverterInterface
     protected $hasWith = false;
 
     /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    public function setRouter(RouterInterface $router = null)
-    {
-        $this->router = $router;
-    }
-
-    /**
      * @param Request                $request
      * @param ParamConverter $configuration
      *
@@ -93,8 +82,8 @@ class PropelParamConverter implements ParamConverterInterface
         $options = $configuration->getOptions();
 
         // Check route options for converter options, if there are non provided.
-        if (empty($options) && $request->attributes->has('_route') && $this->router && $configuration instanceof ParamConverter) {
-            $converterOption = $this->router->getRouteCollection()->get($request->attributes->get('_route'))->getOption('propel_converter');
+        if (empty($options) && $request->attributes->has('propel_converter') && $configuration instanceof ParamConverter) {
+            $converterOption = $request->attributes->get('propel_converter');
             if (!empty($converterOption[$configuration->getName()])) {
                 $options = $converterOption[$configuration->getName()];
             }
