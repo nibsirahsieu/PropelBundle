@@ -174,4 +174,9 @@ class PropelLogger implements \BasicLogger
     {
         return $this->queries;
     }
+    
+    public function reset()
+    {
+        $this->queries = array();
+    }
 }
