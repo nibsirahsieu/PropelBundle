@@ -105,4 +105,10 @@ class PropelDataCollector extends DataCollector
     {
         return count($this->logger->getQueries());
     }
+    
+    public function reset()
+    {
+        $this->data = array();
+        $this->logger->reset();
+    }
 }

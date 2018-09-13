@@ -102,4 +102,9 @@ class PropelLogger implements LoggerInterface
     {
         return $this->queries;
     }
+    
+    public function reset()
+    {
+        $this->queries = array();
+    }
 }
