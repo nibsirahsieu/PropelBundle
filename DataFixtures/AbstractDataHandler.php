@@ -51,7 +51,7 @@ abstract class AbstractDataHandler
     /**
      * Load Map builders.
      *
-     * @param string $connectionName A connection name.
+     * @param string|null $connectionName A connection name.
      */
     protected function loadMapBuilders($connectionName = null)
     {
@@ -96,6 +96,7 @@ abstract class AbstractDataHandler
      *
      * @param string $path           The relative path of the file.
      * @param string $shortClassName The short class name aka the filename without extension.
+     * @return string|null
      */
     private function guessFullClassName($path, $shortClassName)
     {

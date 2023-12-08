@@ -54,7 +54,7 @@ abstract class AbstractDataDumper extends AbstractDataHandler implements DataDum
      * Dumps data to fixture from a given connection and
      * returns an array.
      *
-     * @param  string $connectionName The connection name
+     * @param  string $connectionName|null The connection name
      * @return array
      */
     protected function getDataAsArray($connectionName = null)
@@ -225,6 +225,15 @@ abstract class AbstractDataDumper extends AbstractDataHandler implements DataDum
         return $classes;
     }
 
+    /**
+     *
+     * @param array $resultsSets
+     * @param string $tableName
+     * @param \ColumnMap $column
+     * @param string|null $in
+     *
+     * @return array
+     */
     protected function fixOrderingOfForeignKeyDataInSameTable($resultsSets, $tableName, $column, $in = null)
     {
         $sql = sprintf('SELECT * FROM %s WHERE %s %s',

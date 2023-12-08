@@ -81,7 +81,7 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
     /**
      * Deletes current data.
      *
-     * @param array $data The data to delete
+     * @param array|null $data The data to delete
      */
     protected function deleteCurrentData($data = null)
     {
@@ -128,7 +128,7 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
     /**
      * Loads the data using the generated data model.
      *
-     * @param array $data The data to be loaded
+     * @param array $data|null The data to be loaded
      */
     protected function loadDataFromArray($data = null)
     {
@@ -269,6 +269,7 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
      * Retrieve all the parent classes of a given class (for the inheritance).
      *
      * @param string     $class Class name of the current object
+     * @return array
      */
     protected function getInheritedClasses($class) {
         $reflectionClass = new \ReflectionClass($class);
