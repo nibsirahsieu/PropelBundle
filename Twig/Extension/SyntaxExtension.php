@@ -21,6 +21,10 @@ use Twig\TwigFilter;
  */
 class SyntaxExtension extends AbstractExtension
 {
+    /**
+     *
+     * @return array
+     */
     public function getFilters()
     {
         return array(
@@ -28,11 +32,20 @@ class SyntaxExtension extends AbstractExtension
         );
     }
 
+    /**
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'propel_syntax_extension';
     }
 
+    /**
+     *
+     * @param string $sql
+     * @return string
+     */
     public function formatSQL($sql)
     {
         // list of keywords to prepend a newline in output
