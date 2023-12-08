@@ -9,9 +9,8 @@
  */
 namespace Propel\Bundle\PropelBundle\Controller;
 
+use Propel\Bundle\PropelBundle\DataCollector\PropelDataCollector;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 
@@ -24,6 +23,7 @@ class PanelController extends AbstractController
 {
     /**
      * This method renders the global Propel configuration.
+     * @return \Symfony\Component\HttpFoundation\Response A Response instance
      */
     public function configurationAction(\PropelConfiguration $propelConfiguration)
     {
@@ -31,7 +31,7 @@ class PanelController extends AbstractController
             '@Propel/Panel/configuration.html.twig',
             array(
                 'propel_version'     => \Propel::VERSION,
-                
+
                 'configuration'      => $propelConfiguration->getParameters(),
                 'default_connection' => $this->getParameter('propel.dbal.default_connection'),
                 'logging'            => $this->getParameter('propel.logging'),
@@ -48,15 +48,18 @@ class PanelController extends AbstractController
      * @param string  $connection The connection name
      * @param integer $query
      *
-     * @param Profiler|null $profiler
-     * @return Symfony\Component\HttpFoundation\Response A Response instance
+     * @param Profiler $profiler
+     * @return \Symfony\Component\HttpFoundation\Response A Response instance
      */
     public function explainAction($token, $connection, $query, Profiler $profiler)
     {
         $profiler->disable();
 
         $profile = $profiler->loadProfile($token);
-        $queries = $profile->getCollector('propel')->getQueries();
+
+        /** @var PropelDataCollector */
+        $collector = $profile->getCollector('propel');
+        $queries = $collector->getQueries();
 
         if (!isset($queries[$query])) {
             return new Response('This query does not exist.');
