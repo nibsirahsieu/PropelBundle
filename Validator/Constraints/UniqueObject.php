@@ -41,6 +41,9 @@ class UniqueObject extends Constraint
      */
     public $errorPath;
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct($options = null)
     {
         parent::__construct($options);
