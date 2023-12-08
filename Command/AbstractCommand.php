@@ -25,6 +25,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @author Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author William DURAND <william.durand1@gmail.com>
+ *
+ * @method \Symfony\Bundle\FrameworkBundle\Console\Application getApplication()
  */
 abstract class AbstractCommand extends Command
 {
@@ -52,7 +54,7 @@ abstract class AbstractCommand extends Command
     protected $buffer = null;
 
     /**
-     * @var Symfony\Component\HttpKernel\Bundle\BundleInterface
+     * @var BundleInterface
      */
     protected $bundle = null;
 
@@ -528,7 +530,7 @@ EOT;
      * Extract the database name from a given DSN
      *
      * @param  string $dsn A DSN
-     * @return string The database name extracted from the given DSN
+     * @return string|null The database name extracted from the given DSN
      */
     protected function parseDbName($dsn)
     {
@@ -635,6 +637,7 @@ EOT;
      * @param OutputInterface $output   The output.
      * @param string          $question A given question.
      * @param string          $default  A default response.
+     * @return mixed
      */
     protected function askConfirmation(OutputInterface $output, $question, $default = null)
     {

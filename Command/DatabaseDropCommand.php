@@ -46,6 +46,8 @@ EOT
     /**
      * @see Command
      *
+     * @return int
+     *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -65,7 +67,8 @@ EOT
             $dbName = $this->parseDbName($config['connection']['dsn']);
 
             if (null === $dbName) {
-                return $output->writeln('<error>No database name found.</error>');
+                $output->writeln('<error>No database name found.</error>');
+                return 1;
             } else {
                 $query  = 'DROP DATABASE '. $dbName .';';
             }

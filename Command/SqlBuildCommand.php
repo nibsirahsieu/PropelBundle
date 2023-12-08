@@ -44,6 +44,8 @@ EOT
     /**
      * @see Command
      *
+     * @return int
+     * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -102,7 +104,7 @@ EOT
      * @param string $target    target map filename
      * @param string $generated generated map filename
      *
-     * @return bool
+     * @return int|false
      */
     protected function mergeMapFiles($target, $generated)
     {

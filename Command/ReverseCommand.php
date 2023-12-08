@@ -45,6 +45,8 @@ EOT
     /**
      * @see Command
      *
+     * @return int
+     * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
     protected function execute(InputInterface $input, OutputInterface $output)

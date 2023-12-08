@@ -111,6 +111,8 @@ EOT
     /**
      * @see Command
      *
+     * @return int
+     *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -156,12 +158,13 @@ EOT
      *
      * @param  \Symfony\Component\Console\Input\InputInterface   $input
      * @param  \Symfony\Component\Console\Output\OutputInterface $output
-     * @return void
+     * @param string|null $type
+     * @return int
      */
     protected function loadFixtures(InputInterface $input, OutputInterface $output, $type = null)
     {
-        if (null === $type) {
-            return;
+        if (null === $type || !\in_array($type, ['yml', 'xml'], true)) {
+            return -1;
         }
 
         $datas = $this->getFixtureFiles($type);
@@ -174,26 +177,25 @@ EOT
 
         if ('yml' === $type) {
             $loader = new YamlDataLoader($this->getApplication()->getKernel()->getProjectDir() . '/app', $this->getContainer());
-        } elseif ('xml' === $type) {
-            $loader = new XmlDataLoader($this->getApplication()->getKernel()->getProjectDir() . '/app');
         } else {
-            return;
+            $loader = new XmlDataLoader($this->getApplication()->getKernel()->getProjectDir() . '/app');
         }
 
         try {
             $nb = $loader->load($datas, $name);
+            return 0;
         } catch (\Exception $e) {
             $this->writeSection($output, array(
                 '[Propel] Exception',
                 '',
                 $e->getMessage()), 'fg=white;bg=red');
 
-            return false;
+            return 1;
         }
 
         $output->writeln(sprintf('<comment>%s</comment> %s fixtures file%s loaded.', $nb, strtoupper($type), $nb > 1 ? 's' : ''));
 
-        return true;
+        return 1;
     }
 
     /**
@@ -255,6 +257,8 @@ EOT
 
     /**
      * Insert SQL
+     * 
+     * @return bool
      */
     protected function insertSql($config, $sqlDir, $schemaDir, $output)
     {

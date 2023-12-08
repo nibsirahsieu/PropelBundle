@@ -9,6 +9,7 @@
  */
 namespace Propel\Bundle\PropelBundle\Command;
 
+use Database;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -38,13 +39,17 @@ abstract class GeneratorAwareCommand extends AbstractCommand
         set_include_path(sprintf('%s/generator/lib', $propelPath) . PATH_SEPARATOR . get_include_path());
     }
 
+    /**
+     *
+     * @return Database[]
+     */
     protected function getDatabasesFromSchema(\SplFileInfo $file, \XmlToAppData $transformer = null)
     {
         if (null === $transformer) {
             $transformer = new \XmlToAppData(null, null, 'UTF-8');
         }
 
-        $config      = new \QuickGeneratorConfig();
+        $config = new \QuickGeneratorConfig();
 
         if (file_exists($propelIni = $this->getContainer()->getParameter('kernel.project_dir') . '/app/config/propel.ini')) {
             foreach ($this->getProperties($propelIni) as $key => $value) {

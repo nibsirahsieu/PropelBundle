@@ -14,7 +14,7 @@ namespace Propel\Bundle\PropelBundle\Command;
  */
 class Phing extends \Phing
 {
-    public static function getPhingVersion()
+    public static function getPhingVersion(): string
     {
         return 'Phing/Symfony';
     }

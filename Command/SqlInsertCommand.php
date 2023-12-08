@@ -46,6 +46,8 @@ EOT
     /**
      * @see Command
      *
+     * @return int
+     *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -75,6 +77,10 @@ EOT
         }
     }
 
+    /**
+     *
+     * @return string
+     */
     protected function getSqlDir()
     {
         return sprintf('%s/propel/sql', $this->getApplication()->getKernel()->getCacheDir());

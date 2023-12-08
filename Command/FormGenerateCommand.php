@@ -47,6 +47,8 @@ EOT
     /**
      * @see Command
      *
+     * @return int
+     *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -85,6 +87,10 @@ EOT
         }
     }
 
+    /**
+     *
+     * @return string
+     */
     private function createDirectory(BundleInterface $bundle, OutputInterface $output)
     {
         $fs = new Filesystem();
@@ -112,6 +118,13 @@ EOT
         $this->writeNewFile($output, $this->getRelativeFileName($file) . ($force ? ' (forced)' : ''));
     }
 
+    /**
+     *
+     * @param \Table $table
+     * @param string $formTypeContent
+     *
+     * @return string|string[]
+     */
     private function addFields(\Table $table, $formTypeContent)
     {
         $buildCode = '';
