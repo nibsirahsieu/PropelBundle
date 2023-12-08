@@ -38,6 +38,13 @@ class PropelFactory implements UserProviderFactoryInterface
         $this->providerId = $providerId;
     }
 
+    /**
+     *
+     * @param ContainerBuilder $container
+     * @param string $id
+     * @param array $config
+     * @return void
+     */
     public function create(ContainerBuilder $container, $id, $config)
     {
         $container
@@ -47,6 +54,10 @@ class PropelFactory implements UserProviderFactoryInterface
         ;
     }
 
+    /**
+     *
+     * @return string
+     */
     public function getKey()
     {
         return $this->key;

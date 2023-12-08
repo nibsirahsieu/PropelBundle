@@ -71,7 +71,7 @@ class PropelExtension extends Extension
             $loader->load('converters.xml');
             $loader->load('console.xml');
 
-            if (($env = $container->getParameter('kernel.environment')) === 'dev' && class_exists(WebProfilerExtension::class)) {
+            if (($container->getParameter('kernel.environment')) === 'dev' && class_exists(WebProfilerExtension::class)) {
                 $container->setAlias(Profiler::class, 'profiler');
             }
         }
@@ -139,6 +139,9 @@ class PropelExtension extends Extension
         $container->getDefinition('propel.configuration')->setArguments(array($c));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
         return new Configuration($container->getParameter('kernel.debug'));
