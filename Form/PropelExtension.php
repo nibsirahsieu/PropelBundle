@@ -21,6 +21,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 class PropelExtension extends AbstractExtension
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function loadTypes()
     {
         return array(
@@ -30,6 +33,9 @@ class PropelExtension extends AbstractExtension
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function loadTypeGuesser()
     {
         return new PropelTypeGuesser();

@@ -3,7 +3,7 @@
 namespace Propel\Bundle\PropelBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class BaseAbstractType extends AbstractType
 {
@@ -11,6 +11,10 @@ abstract class BaseAbstractType extends AbstractType
         'name' => '',
     );
 
+    /**
+     *
+     * @param array|null $mergeOptions
+     */
     public function __construct($mergeOptions = null)
     {
         if ($mergeOptions) {
@@ -18,26 +22,51 @@ abstract class BaseAbstractType extends AbstractType
         }
     }
 
+    /**
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
     public function setOption($name, $value)
     {
         $this->options[$name] = $value;
     }
 
+    /**
+     *
+     * @param string $name
+     * @return mixed
+     */
     public function getOption($name)
     {
         return $this->options[$name];
     }
 
+    /**
+     *
+     * @param array $options
+     * @return void
+     */
     public function setOptions($options)
     {
         $this->options = $options;
     }
 
+    /**
+     *
+     * @return array
+     */
     public function getOptions()
     {
         return $this->options;
     }
 
+    /**
+     *
+     * @param array $options
+     * @return void
+     */
     public function mergeOptions($options)
     {
         $this->options = array_merge($this->options, $options);
@@ -46,7 +75,7 @@ abstract class BaseAbstractType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults($this->options);
     }

@@ -23,6 +23,11 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  */
 class CollectionToArrayTransformer implements DataTransformerInterface
 {
+    /**
+     *
+     * @param \PropelObjectCollection $collection
+     * @return array
+     */
     public function transform($collection)
     {
         if (null === $collection) {
@@ -36,6 +41,10 @@ class CollectionToArrayTransformer implements DataTransformerInterface
         return $collection->getData();
     }
 
+    /**
+     *
+     * @return PropelObjectCollection
+     */
     public function reverseTransform($array)
     {
         $collection = new PropelObjectCollection();

@@ -25,12 +25,21 @@ class TranslationFormListener implements EventSubscriberInterface
     private $columns;
     private $dataClass;
 
+    /**
+     *
+     * @param array $columns
+     * @param mixed $dataClass
+     */
     public function __construct($columns, $dataClass)
     {
         $this->columns = $columns;
         $this->dataClass = $dataClass;
     }
 
+    /**
+     *
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return array(

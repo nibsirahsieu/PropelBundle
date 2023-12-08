@@ -25,12 +25,21 @@ class TranslationCollectionFormListener implements EventSubscriberInterface
     private $i18nClass;
     private $languages;
 
+    /**
+     *
+     * @param array $languages
+     * @param string $i18nClass
+     */
     public function __construct($languages, $i18nClass)
     {
         $this->i18nClass = $i18nClass;
         $this->languages = $languages;
     }
 
+    /**
+     *
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return array(

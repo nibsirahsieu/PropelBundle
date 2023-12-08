@@ -125,6 +125,8 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
         if ($column = $this->getColumn($class, $property)) {
             return new ValueGuess($column->isNotNull(), Guess::HIGH_CONFIDENCE);
         }
+
+        return null;
     }
 
     /**
@@ -144,6 +146,8 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
                     return new ValueGuess(null, Guess::MEDIUM_CONFIDENCE);
             }
         }
+
+        return null;
     }
 
     /**
@@ -160,8 +164,16 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
                     return new ValueGuess(null, Guess::MEDIUM_CONFIDENCE);
             }
         }
+
+        return null;
     }
 
+    /**
+     *
+     * @param string $class
+     *
+     * @return \TableMap|null
+     */
     protected function getTable($class)
     {
         if (isset($this->cache[$class])) {
@@ -173,8 +185,17 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
 
             return $this->cache[$class] = $query->getTableMap();
         }
+
+        return null;
     }
 
+    /**
+     *
+     * @param string $class
+     * @param string $property
+     *
+     * @return \ColumnMap|null
+     */
     protected function getColumn($class, $property)
     {
         if (isset($this->cache[$class.'::'.$property])) {
@@ -190,5 +211,7 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
         if ($table && $table->hasColumnByInsensitiveCase($property)) {
             return $this->cache[$class.'::'.$property] = $table->getColumnByInsensitiveCase($property);
         }
+
+        return null;
     }
 }
