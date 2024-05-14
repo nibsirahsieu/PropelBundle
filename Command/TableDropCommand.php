@@ -25,7 +25,7 @@ class TableDropCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Drop a given table or all tables in the database.')

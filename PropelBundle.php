@@ -23,7 +23,7 @@ class PropelBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function boot()
+    public function boot(): void
     {
         require_once $this->container->getParameter('propel.path').'/runtime/lib/Propel.php';
 
@@ -64,7 +64,7 @@ class PropelBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
