@@ -23,9 +23,9 @@ class PanelController extends AbstractController
 {
     /**
      * This method renders the global Propel configuration.
-     * @return \Symfony\Component\HttpFoundation\Response A Response instance
+     * @return Response A Response instance
      */
-    public function configurationAction(\PropelConfiguration $propelConfiguration)
+    public function configurationAction(\PropelConfiguration $propelConfiguration): Response
     {
         return $this->render(
             '@Propel/Panel/configuration.html.twig',
@@ -49,9 +49,9 @@ class PanelController extends AbstractController
      * @param integer $query
      *
      * @param Profiler $profiler
-     * @return \Symfony\Component\HttpFoundation\Response A Response instance
+     * @return Response A Response instance
      */
-    public function explainAction($token, $connection, $query, Profiler $profiler)
+    public function explainAction(string $token, string $connection, int $query, Profiler $profiler): Response
     {
         $profiler->disable();
 

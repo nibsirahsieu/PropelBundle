@@ -23,7 +23,7 @@ class SqlInsertCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Insert SQL for current model')
@@ -50,7 +50,7 @@ EOT
      *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('force')) {
             $connections = $this->getConnections();
@@ -81,7 +81,7 @@ EOT
      *
      * @return string
      */
-    protected function getSqlDir()
+    protected function getSqlDir(): string
     {
         return sprintf('%s/propel/sql', $this->getApplication()->getKernel()->getCacheDir());
     }
@@ -91,12 +91,12 @@ EOT
      * @param OutputInterface   $output
      * @param string            $connectionName
      */
-    protected function doSqlInsert(\PropelSqlManager $manager, OutputInterface $output, $connectionName)
+    protected function doSqlInsert(\PropelSqlManager $manager, OutputInterface $output, string $connectionName): void
     {
         try {
             $statusCode = $manager->insertSql($connectionName);
         } catch (\Exception $e) {
-            return $this->writeSection(
+            $this->writeSection(
                 $output,
                 array('[Propel] Exception', '', $e),
                 'fg=white;bg=red'
@@ -113,7 +113,7 @@ EOT
     /**
      * @return array
      */
-    protected function getConnections()
+    protected function getConnections(): array
     {
         $propelConfiguration = $this->getContainer()->get('propel.configuration');
 

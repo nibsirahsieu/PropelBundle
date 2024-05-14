@@ -21,14 +21,14 @@ abstract class GeneratorAwareCommand extends AbstractCommand
     /**
      * {@inheritdoc}
      */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
         $this->loadPropelGenerator();
     }
 
-    protected function loadPropelGenerator()
+    protected function loadPropelGenerator(): void
     {
         $propelPath = $this->getContainer()->getParameter('propel.path');
 
@@ -41,9 +41,9 @@ abstract class GeneratorAwareCommand extends AbstractCommand
 
     /**
      *
-     * @return Database[]
+     * @return array<Database>
      */
-    protected function getDatabasesFromSchema(\SplFileInfo $file, \XmlToAppData $transformer = null)
+    protected function getDatabasesFromSchema(\SplFileInfo $file, \XmlToAppData $transformer = null): array
     {
         if (null === $transformer) {
             $transformer = new \XmlToAppData(null, null, 'UTF-8');

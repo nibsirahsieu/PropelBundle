@@ -29,7 +29,7 @@ class TestCase extends PHPUnit_Framework_TestCase
         require_once $file;
     }
 
-    public function getContainer()
+    public function getContainer(): ContainerBuilder
     {
         return new ContainerBuilder(new ParameterBag(array(
             'kernel.debug'      => false,

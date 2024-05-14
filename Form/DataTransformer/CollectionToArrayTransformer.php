@@ -25,10 +25,10 @@ class CollectionToArrayTransformer implements DataTransformerInterface
 {
     /**
      *
-     * @param \PropelObjectCollection $collection
+     * @param \PropelObjectCollection|null $collection
      * @return array
      */
-    public function transform($collection)
+    public function transform($collection): array
     {
         if (null === $collection) {
             return array();
@@ -42,10 +42,10 @@ class CollectionToArrayTransformer implements DataTransformerInterface
     }
 
     /**
-     *
+     * @param array|string|null $array
      * @return PropelObjectCollection
      */
-    public function reverseTransform($array)
+    public function reverseTransform($array): PropelObjectCollection
     {
         $collection = new PropelObjectCollection();
 

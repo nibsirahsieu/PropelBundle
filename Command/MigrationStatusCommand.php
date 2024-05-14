@@ -22,7 +22,7 @@ class MigrationStatusCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Lists the migrations yet to be executed')
@@ -43,7 +43,7 @@ EOT
      * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->callPhing('status');
 

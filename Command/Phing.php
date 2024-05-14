@@ -22,7 +22,7 @@ class Phing extends \Phing
     /**
      * @see Phing
      */
-    public function runBuild()
+    public function runBuild(): void
     {
         // workaround for included phing 2.3 which by default loads many tasks
         // that are not needed and incompatible (eg phing.tasks.ext.FtpDeployTask)

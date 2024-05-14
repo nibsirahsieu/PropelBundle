@@ -30,7 +30,7 @@ class TranslationFormListener implements EventSubscriberInterface
      * @param array $columns
      * @param mixed $dataClass
      */
-    public function __construct($columns, $dataClass)
+    public function __construct(array $columns, $dataClass)
     {
         $this->columns = $columns;
         $this->dataClass = $dataClass;
@@ -40,14 +40,14 @@ class TranslationFormListener implements EventSubscriberInterface
      *
      * @return array
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(
             FormEvents::PRE_SET_DATA => array('preSetData', 1),
         );
     }
 
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();

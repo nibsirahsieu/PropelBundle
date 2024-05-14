@@ -59,7 +59,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
      *
      * @throws \PropelException If the class is invalid and no query class could be found.
      */
-    public function __construct($className, array $options = array(), \ModelCriteria $query = null)
+    public function __construct(string $className, array $options = array(), \ModelCriteria $query = null)
     {
         $this->className = $className;
         $this->options = array_replace_recursive($this->options, $options);
@@ -93,7 +93,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
     /**
      * {@inheritdoc}
      */
-    public function load($resource, $locale, $domain = 'messages')
+    public function load($resource, string $locale, string $domain = 'messages'): MessageCatalogue
     {
         // The loader only accepts itself as a resource.
         if ($resource !== $this) {
@@ -124,7 +124,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
     /**
      * {@inheritdoc}
      */
-    public function dump(MessageCatalogue $messages, $options = array())
+    public function dump(MessageCatalogue $messages, array $options = array())
     {
         $connection = \Propel::getConnection($this->query->getDbName());
         $connection->beginTransaction();
@@ -159,7 +159,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
     /**
      * {@inheritdoc}
      */
-    public function isFresh($timestamp)
+    public function isFresh($timestamp): bool
     {
         $query = clone $this->query;
         $query->filterBy($this->getColumnPhpname('updated_at'), new \DateTime('@'.$timestamp), \ModelCriteria::GREATER_THAN);
@@ -170,7 +170,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
     /**
      * {@inheritdoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf('PropelModelTranslation::%s', $this->className);
     }
@@ -178,7 +178,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
     /**
      * {@inheritdoc}
      */
-    public function getResource()
+    public function getResource(): self
     {
         return $this;
     }
@@ -188,7 +188,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
      *
      * @return \PDOStatement
      */
-    private function getResourcesStatement()
+    private function getResourcesStatement(): \PDOStatement
     {
         if ($this->resourcesStatement instanceof \PDOStatement) {
             return $this->resourcesStatement;
@@ -219,7 +219,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
      *
      * @return string
      */
-    private function getColumnname($identifier)
+    private function getColumnname(string $identifier): string
     {
         return $this->options['columns'][$identifier];
     }
@@ -233,7 +233,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
      *
      * @throws \PropelException
      */
-    private function getColumnPhpname($identifier)
+    private function getColumnPhpname(string $identifier): string
     {
         return $this->query->getTableMap()->getColumn($this->getColumnname($identifier))->getPhpName();
     }
@@ -241,7 +241,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize(array(
             $this->className,
@@ -252,7 +252,7 @@ class ModelTranslation implements DumperInterface, LoaderInterface, ResourceInte
     /**
      * {@inheritdoc}
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         list(
             $this->className,

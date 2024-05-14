@@ -30,7 +30,7 @@ class TranslationCollectionFormListener implements EventSubscriberInterface
      * @param array $languages
      * @param string $i18nClass
      */
-    public function __construct($languages, $i18nClass)
+    public function __construct(array $languages, string $i18nClass)
     {
         $this->i18nClass = $i18nClass;
         $this->languages = $languages;
@@ -40,14 +40,14 @@ class TranslationCollectionFormListener implements EventSubscriberInterface
      *
      * @return array
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(
             FormEvents::PRE_SET_DATA => array('preSetData', 1),
         );
     }
 
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();

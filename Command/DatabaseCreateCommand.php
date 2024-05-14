@@ -24,7 +24,7 @@ class DatabaseCreateCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create a given database or the default one.')
@@ -39,7 +39,7 @@ class DatabaseCreateCommand extends AbstractCommand
      * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         list($name, $config) = $this->getConnection($input, $output);
         $dbName = $this->parseDbName($config['connection']['dsn']);
@@ -79,7 +79,7 @@ class DatabaseCreateCommand extends AbstractCommand
      * @param  array  $config A Propel connection configuration.
      * @return array
      */
-    protected function getTemporaryConfiguration($name, $config)
+    protected function getTemporaryConfiguration(string $name, array $config): array
     {
         $dbName = $this->parseDbName($config['connection']['dsn']);
 

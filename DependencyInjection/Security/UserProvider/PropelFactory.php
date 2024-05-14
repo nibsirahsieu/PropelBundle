@@ -13,6 +13,7 @@ namespace Propel\Bundle\PropelBundle\DependencyInjection\Security\UserProvider;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\UserProvider\UserProviderFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\Config\Definition\Builder\ParentNodeDefinitionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 
@@ -32,7 +33,7 @@ class PropelFactory implements UserProviderFactoryInterface
      * @param string $key
      * @param string $providerId
      */
-    public function __construct($key, $providerId)
+    public function __construct(string $key, string $providerId)
     {
         $this->key = $key;
         $this->providerId = $providerId;
@@ -45,7 +46,7 @@ class PropelFactory implements UserProviderFactoryInterface
      * @param array $config
      * @return void
      */
-    public function create(ContainerBuilder $container, $id, $config)
+    public function create(ContainerBuilder $container, string $id, array $config): void
     {
         $container
             ->setDefinition($id, new ChildDefinition($this->providerId))
@@ -58,13 +59,14 @@ class PropelFactory implements UserProviderFactoryInterface
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    public function addConfiguration(NodeDefinition $node)
+    public function addConfiguration(NodeDefinition $node): void
     {
+        /** @var ParentNodeDefinitionInterface $node */
         $node
             ->children()
                 ->scalarNode('class')

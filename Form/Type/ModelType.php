@@ -18,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
@@ -64,7 +63,7 @@ class ModelType extends AbstractType
      * @internal This method is public to be usable as callback. It should not
      *           be used in user code.
      */
-    public static function createChoiceLabel($choice)
+    public static function createChoiceLabel($choice): string
     {
         return (string) $choice;
     }
@@ -86,7 +85,7 @@ class ModelType extends AbstractType
      * @internal This method is public to be usable as callback. It should not
      *           be used in user code.
      */
-    public static function createChoiceName($choice, $key, $value)
+    public static function createChoiceName($choice, $key, $value): string
     {
         return str_replace('-', '_', (string) $value);
     }
@@ -94,7 +93,7 @@ class ModelType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['multiple']) {
             $builder->addViewTransformer(new CollectionToArrayTransformer(), true);
@@ -104,7 +103,7 @@ class ModelType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $choiceLoader = function (Options $options) {
             // Unless the choices are given explicitly, load them on demand
@@ -224,7 +223,7 @@ class ModelType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'model';
     }
@@ -232,7 +231,7 @@ class ModelType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

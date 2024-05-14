@@ -12,6 +12,8 @@
 namespace Propel\Bundle\PropelBundle\Form;
 
 use Symfony\Component\Form\AbstractExtension;
+use Symfony\Component\Form\FormTypeGuesserInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
@@ -22,9 +24,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 class PropelExtension extends AbstractExtension
 {
     /**
-     * {@inheritdoc}
+     * @return array<FormTypeInterface>
      */
-    protected function loadTypes()
+    protected function loadTypes(): array
     {
         return array(
             new Type\ModelType(PropertyAccess::createPropertyAccessor()),
@@ -34,9 +36,9 @@ class PropelExtension extends AbstractExtension
     }
 
     /**
-     * {@inheritdoc}
+     * @return FormTypeGuesserInterface|null
      */
-    protected function loadTypeGuesser()
+    protected function loadTypeGuesser(): ?FormTypeGuesserInterface
     {
         return new PropelTypeGuesser();
     }

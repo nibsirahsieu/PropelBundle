@@ -49,7 +49,7 @@ class PropelDataCollector extends DataCollector
         $this->propelConfiguration = $propelConfiguration;
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->logger->reset();
     }
@@ -57,7 +57,7 @@ class PropelDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null): void
     {
         $this->data = array(
             'queries' => $this->buildQueries(),
@@ -70,7 +70,7 @@ class PropelDataCollector extends DataCollector
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'propel';
     }
@@ -80,7 +80,7 @@ class PropelDataCollector extends DataCollector
      *
      * @return array
      */
-    public function getQueries()
+    public function getQueries(): array
     {
         return $this->data['queries'];
     }
@@ -90,7 +90,7 @@ class PropelDataCollector extends DataCollector
      *
      * @return int
      */
-    public function getQueryCount()
+    public function getQueryCount(): int
     {
         return $this->data['querycount'];
     }
@@ -100,9 +100,9 @@ class PropelDataCollector extends DataCollector
      *
      * @return float
      */
-    public function getTime()
+    public function getTime(): float
     {
-        $time = 0;
+        $time = 0.0;
         foreach ($this->data['queries'] as $query) {
             $time += (float) $query['time'];
         }
@@ -115,7 +115,7 @@ class PropelDataCollector extends DataCollector
      *
      * @return array
      */
-    private function buildQueries()
+    private function buildQueries(): array
     {
         $queries = array();
 
@@ -145,7 +145,7 @@ class PropelDataCollector extends DataCollector
      *
      * @return int
      */
-    private function countQueries()
+    private function countQueries(): int
     {
         return count($this->logger->getQueries());
     }

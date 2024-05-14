@@ -26,7 +26,7 @@ class SqlBuildCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Build the SQL generation code for all tables based on Propel XML schemas')
@@ -48,7 +48,7 @@ EOT
      * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
@@ -106,7 +106,7 @@ EOT
      *
      * @return int|false
      */
-    protected function mergeMapFiles($target, $generated)
+    protected function mergeMapFiles(string $target, string $generated)
     {
         if (false === ($targetContent = file($target))) {
             return false;

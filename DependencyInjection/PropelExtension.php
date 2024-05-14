@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Bundle\WebProfilerBundle\DependencyInjection\WebProfilerExtension;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * PropelExtension loads the PropelBundle configuration.
@@ -30,7 +31,7 @@ class PropelExtension extends Extension
      * @param array            $configs   An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $processor = new Processor();
         $configuration = $this->getConfiguration($configs, $container);
@@ -103,7 +104,7 @@ class PropelExtension extends Extension
      * @param array            $config    An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    protected function dbalLoad(array $config, ContainerBuilder $container)
+    protected function dbalLoad(array $config, ContainerBuilder $container): void
     {
         if (empty($config['default_connection'])) {
             $keys = array_keys($config['connections']);
@@ -140,9 +141,12 @@ class PropelExtension extends Extension
     }
 
     /**
-     * {@inheritdoc}
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     * @return ConfigurationInterface|null
      */
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    public function getConfiguration(array $config, ContainerBuilder $container): ?ConfigurationInterface
     {
         return new Configuration($container->getParameter('kernel.debug'));
     }
@@ -152,7 +156,7 @@ class PropelExtension extends Extension
      *
      * @return string The XSD base path
      */
-    public function getXsdValidationBasePath()
+    public function getXsdValidationBasePath(): string
     {
         return __DIR__.'/../Resources/config/schema';
     }
@@ -164,7 +168,7 @@ class PropelExtension extends Extension
      *
      * @return string The alias
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'propel';
     }

@@ -38,7 +38,7 @@ class Properties
      *
      * @return array An array of properties.
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }

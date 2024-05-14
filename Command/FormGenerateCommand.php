@@ -26,7 +26,7 @@ class FormGenerateCommand extends GeneratorAwareCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate Form types stubs based on the schema.xml')
@@ -51,7 +51,7 @@ EOT
      *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($schemas = $this->getSchemasFromBundle($this->bundle)) {
             $schemas = $this->getFinalSchemas($this->getContainer()->get('kernel'));
@@ -68,7 +68,7 @@ EOT
         return 0;
     }
 
-    private function createFormTypeFromDatabase(BundleInterface $bundle, \Database $database, $models, OutputInterface $output, $force = false)
+    private function createFormTypeFromDatabase(BundleInterface $bundle, \Database $database, array $models, OutputInterface $output, bool $force = false): void
     {
         $dir = $this->createDirectory($bundle, $output);
 
@@ -91,7 +91,7 @@ EOT
      *
      * @return string
      */
-    private function createDirectory(BundleInterface $bundle, OutputInterface $output)
+    private function createDirectory(BundleInterface $bundle, OutputInterface $output): string
     {
         $fs = new Filesystem();
 
@@ -103,7 +103,7 @@ EOT
         return $dir;
     }
 
-    private function writeFormType(BundleInterface $bundle, \Table $table, \SplFileInfo $file, $force, OutputInterface $output)
+    private function writeFormType(BundleInterface $bundle, \Table $table, \SplFileInfo $file, bool $force, OutputInterface $output): void
     {
         $modelName       = $table->getPhpName();
         $formTypeContent = file_get_contents(__DIR__ . '/../Resources/skeleton/FormType.php');
@@ -125,7 +125,7 @@ EOT
      *
      * @return string|string[]
      */
-    private function addFields(\Table $table, $formTypeContent)
+    private function addFields(\Table $table, string $formTypeContent)
     {
         $buildCode = '';
         foreach ($table->getColumns() as $column) {

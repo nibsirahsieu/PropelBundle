@@ -23,7 +23,7 @@ class MigrationMigrateCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Executes the next migrations up')
@@ -54,7 +54,7 @@ EOT
      * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('down')) {
             $ret=$this->callPhing('migration-down');

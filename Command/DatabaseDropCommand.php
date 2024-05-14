@@ -24,7 +24,7 @@ class DatabaseDropCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Drop a given database or the default one.')
@@ -50,7 +50,7 @@ EOT
      *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('force')) {
             if ('prod' === $this->getApplication()->getKernel()->getEnvironment()) {

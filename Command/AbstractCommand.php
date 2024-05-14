@@ -9,6 +9,8 @@
  */
 namespace Propel\Bundle\PropelBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
@@ -26,7 +28,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @author Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author William DURAND <william.durand1@gmail.com>
  *
- * @method \Symfony\Bundle\FrameworkBundle\Console\Application getApplication()
+ * @method Application getApplication()
  */
 abstract class AbstractCommand extends Command
 {
@@ -71,7 +73,7 @@ abstract class AbstractCommand extends Command
 
     private ContainerInterface $container;
 
-    public function __construct(ContainerInterface $container, $name = null)
+    public function __construct(ContainerInterface $container, string $name = null)
     {
         $this->container = $container;
 
@@ -87,11 +89,12 @@ abstract class AbstractCommand extends Command
      * Return the package for a given bundle.
      *
      * @param Bundle $bundle
+     * @param string $namespace
      * @param string $baseDirectory The base directory to exclude from prefix.
      *
      * @return string
      */
-    protected function getPackage(Bundle $bundle, $namespace = '', $baseDirectory = '')
+    protected function getPackage(Bundle $bundle, string $namespace = '', string $baseDirectory = ''): string
     {
         $path  = explode(DIRECTORY_SEPARATOR, realpath($bundle->getPath()));
         $bundle_namespace = explode('\\', $bundle->getNamespace());
@@ -133,7 +136,7 @@ abstract class AbstractCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
@@ -161,7 +164,7 @@ abstract class AbstractCommand extends Command
      * @param string $taskName   A Propel task name.
      * @param array  $properties An array of properties to pass to Phing.
      */
-    protected function callPhing($taskName, $properties = array())
+    protected function callPhing(string $taskName, array $properties = array()): bool
     {
         $kernel = $this->getApplication()->getKernel();
 
@@ -238,8 +241,9 @@ abstract class AbstractCommand extends Command
 
     /**
      * @param KernelInterface $kernel The application kernel.
+     * @param string          $cacheDir
      */
-    protected function copySchemas(KernelInterface $kernel, $cacheDir)
+    protected function copySchemas(KernelInterface $kernel, string $cacheDir): void
     {
         $filesystem = new Filesystem();
 
@@ -306,11 +310,12 @@ abstract class AbstractCommand extends Command
     /**
      * Return a list of final schema files that will be processed.
      *
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
+     * @param KernelInterface       $kernel
+     * @param BundleInterface|null  $bundle
      *
      * @return array
      */
-    protected function getFinalSchemas(KernelInterface $kernel, BundleInterface $bundle = null)
+    protected function getFinalSchemas(KernelInterface $kernel, BundleInterface $bundle = null): array
     {
         if (null !== $bundle) {
             return $this->getSchemasFromBundle($bundle);
@@ -325,11 +330,11 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Bundle\BundleInterface $bundle
+     * @param BundleInterface $bundle
      *
      * @return array
      */
-    protected function getSchemasFromBundle(BundleInterface $bundle)
+    protected function getSchemasFromBundle(BundleInterface $bundle): array
     {
         $finalSchemas = array();
 
@@ -354,7 +359,7 @@ abstract class AbstractCommand extends Command
      * @param  \SplFileInfo $file
      * @return string
      */
-    protected function getRelativeFileName(\SplFileInfo $file)
+    protected function getRelativeFileName(\SplFileInfo $file): string
     {
         return substr(str_replace(realpath($this->getContainer()->getParameter('kernel.project_dir')), '', $file), 1);
     }
@@ -365,7 +370,7 @@ abstract class AbstractCommand extends Command
      * @param KernelInterface $kernel The application kernel.
      * @param string          $file   Should be 'build.properties'.
      */
-    protected function createBuildPropertiesFile(KernelInterface $kernel, $file)
+    protected function createBuildPropertiesFile(KernelInterface $kernel, string $file)
     {
         $filesystem = new Filesystem();
         $buildPropertiesFile = $kernel->getProjectDir().'/app/config/propel.ini';
@@ -382,7 +387,7 @@ abstract class AbstractCommand extends Command
      *
      * @param string $file Should be 'buildtime-conf.xml'.
      */
-    protected function createBuildTimeFile($file)
+    protected function createBuildTimeFile(string $file): void
     {
         $container = $this->getContainer();
 
@@ -440,9 +445,9 @@ EOT;
      * Returns an array of properties as key/value pairs from an input file.
      *
      * @param  string $file A file properties.
-     * @return array  An array of properties as key/value pairs.
+     * @return array<string, bool|string>  An array of properties as key/value pairs.
      */
-    protected function getProperties($file)
+    protected function getProperties(string $file): array
     {
         $properties = array();
 
@@ -477,15 +482,15 @@ EOT;
      * Return the current Propel cache directory.
      * @return string The current Propel cache directory.
      */
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return $this->cacheDir;
     }
 
     /**
-     * @return \Symfony\Component\Config\FileLocatorInterface
+     * @return FileLocatorInterface
      */
-    protected function getFileLocator()
+    protected function getFileLocator(): FileLocatorInterface
     {
         return $this->getContainer()->get('propel.file_locator');
     }
@@ -500,7 +505,7 @@ EOT;
      * @throw \InvalidArgumentException If the connection does not exist.
      * @return array
      */
-    protected function getConnection(InputInterface $input, OutputInterface $output)
+    protected function getConnection(InputInterface $input, OutputInterface $output): array
     {
         $propelConfiguration = $this->getContainer()->get('propel.configuration');
         $name = $input->getOption('connection') ?: $this->getContainer()->getParameter('propel.dbal.default_connection');
@@ -532,7 +537,7 @@ EOT;
      * @param  string $dsn A DSN
      * @return string|null The database name extracted from the given DSN
      */
-    protected function parseDbName($dsn)
+    protected function parseDbName(string $dsn): ?string
     {
         preg_match('#dbname=([a-zA-Z0-9\_]+)#', $dsn, $matches);
 
@@ -547,7 +552,7 @@ EOT;
     /**
      * Check the PropelConfiguration object.
      */
-    protected function checkConfiguration()
+    protected function checkConfiguration(): void
     {
         $parameters = $this->getContainer()->get('propel.configuration')->getParameters();
 
@@ -562,7 +567,7 @@ EOT;
      * @param OutputInterface $output   The output object.
      * @param string          $taskname A task name
      */
-    protected function writeSummary(OutputInterface $output, $taskname)
+    protected function writeSummary(OutputInterface $output, string $taskname): void
     {
         foreach (explode("\n", $this->buffer) as $line) {
             if (false !== strpos($line, '[' . $taskname . ']')) {
@@ -583,10 +588,10 @@ EOT;
      * @see https://github.com/sensio/SensioGeneratorBundle/blob/master/Command/Helper/DialogHelper.php#L52
      *
      * @param OutputInterface $output The output.
-     * @param string          $text   A text message.
+     * @param string|array    $text   A text message.
      * @param string          $style  A style to apply on the section.
      */
-    protected function writeSection(OutputInterface $output, $text, $style = 'bg=blue;fg=white')
+    protected function writeSection(OutputInterface $output, $text, string $style = 'bg=blue;fg=white'): void
     {
         $output->writeln(array(
             '',
@@ -600,13 +605,13 @@ EOT;
      *
      * @param OutputInterface $output   The output.
      * @param string          $taskName A task name.
-     * @param Boolean         $more     Whether to add a 'more details' message or not.
+     * @param bool            $more     Whether to add a 'more details' message or not.
      */
-    protected function writeTaskError($output, $taskName, $more = true)
+    protected function writeTaskError(OutputInterface $output, string $taskName, bool $more = true)
     {
         $moreText = $more ? ' To get more details, run the command with the "--verbose" option.' : '';
 
-        return $this->writeSection($output, array(
+        $this->writeSection($output, array(
             '[Propel] Error',
             '',
             'An error has occured during the "' . $taskName . '" task process.' . $moreText
@@ -617,7 +622,7 @@ EOT;
      * @param OutputInterface $output   The output.
      * @param string          $filename The filename.
      */
-    protected function writeNewFile(OutputInterface $output, $filename)
+    protected function writeNewFile(OutputInterface $output, string $filename): void
     {
         $output->writeln('>>  <info>File+</info>    ' . $filename);
     }
@@ -626,7 +631,7 @@ EOT;
      * @param OutputInterface $output    The output.
      * @param string          $directory The directory.
      */
-    protected function writeNewDirectory(OutputInterface $output, $directory)
+    protected function writeNewDirectory(OutputInterface $output, string $directory): void
     {
         $output->writeln('>>  <info>Dir+</info>     ' . $directory);
     }
@@ -636,10 +641,10 @@ EOT;
      *
      * @param OutputInterface $output   The output.
      * @param string          $question A given question.
-     * @param string          $default  A default response.
+     * @param bool            $default  A default response.
      * @return mixed
      */
-    protected function askConfirmation(OutputInterface $output, $question, $default = null)
+    protected function askConfirmation(OutputInterface $output, string $question, bool $default = null)
     {
         return $this->getHelper('question')->ask($this->input, $output, new ConfirmationQuestion($question, $default));
     }
@@ -649,7 +654,7 @@ EOT;
      * @param  BundleInterface $bundle
      * @return string
      */
-    protected function transformToLogicalName(\SplFileInfo $schema, BundleInterface $bundle)
+    protected function transformToLogicalName(\SplFileInfo $schema, BundleInterface $bundle): string
     {
         $schemaPath = str_replace(
             $bundle->getPath(). DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR,
@@ -664,7 +669,7 @@ EOT;
      * Compiles arguments/properties for the Phing process.
      * @return array
      */
-    private function getPhingArguments(KernelInterface $kernel, $workingDirectory, $properties)
+    private function getPhingArguments(KernelInterface $kernel, string $workingDirectory, array $properties): array
     {
         $args = array();
 

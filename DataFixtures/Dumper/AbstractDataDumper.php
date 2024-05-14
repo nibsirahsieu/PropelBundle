@@ -24,7 +24,7 @@ abstract class AbstractDataDumper extends AbstractDataHandler implements DataDum
     /**
      * {@inheritdoc}
      */
-    public function dump($filename, $connectionName = null)
+    public function dump(string $filename = null, string $connectionName = null): void
     {
         if (null === $filename || '' === $filename) {
             throw new \Exception('Invalid filename provided.');
@@ -48,7 +48,7 @@ abstract class AbstractDataDumper extends AbstractDataHandler implements DataDum
      *
      * @return string
      */
-    abstract protected function transformArrayToData($data);
+    abstract protected function transformArrayToData(array $data);
 
     /**
      * Dumps data to fixture from a given connection and
@@ -57,7 +57,7 @@ abstract class AbstractDataDumper extends AbstractDataHandler implements DataDum
      * @param  string $connectionName|null The connection name
      * @return array
      */
-    protected function getDataAsArray($connectionName = null)
+    protected function getDataAsArray(string $connectionName = null): array
     {
         $tables = array();
         foreach ($this->dbMap->getTables() as $table) {
@@ -194,7 +194,7 @@ abstract class AbstractDataDumper extends AbstractDataHandler implements DataDum
      * @param  array $classes The array with the class names
      * @return array
      */
-    protected function fixOrderingOfForeignKeyData($classes)
+    protected function fixOrderingOfForeignKeyData(array $classes): array
     {
         // reordering classes to take foreign keys into account
         for ($i = 0, $count = count($classes); $i < $count; $i++) {
@@ -234,7 +234,7 @@ abstract class AbstractDataDumper extends AbstractDataHandler implements DataDum
      *
      * @return array
      */
-    protected function fixOrderingOfForeignKeyDataInSameTable($resultsSets, $tableName, $column, $in = null)
+    protected function fixOrderingOfForeignKeyDataInSameTable(array $resultsSets, string $tableName, \ColumnMap $column, ?string $in = null): array
     {
         $sql = sprintf('SELECT * FROM %s WHERE %s %s',
             constant(constant($tableName.'::PEER').'::TABLE_NAME'),

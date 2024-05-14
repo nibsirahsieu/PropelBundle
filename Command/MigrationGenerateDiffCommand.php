@@ -23,7 +23,7 @@ class MigrationGenerateDiffCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generates SQL diff between the XML schemas and the current database structure')
@@ -45,7 +45,7 @@ EOT
      * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (true === $this->callPhing('diff')) {
             $this->writeSummary($output, 'propel-sql-diff');

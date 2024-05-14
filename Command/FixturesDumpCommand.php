@@ -31,7 +31,7 @@ class FixturesDumpCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Dump data from database into YAML fixtures file.')
@@ -58,7 +58,7 @@ EOT
      * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         list($name, $defaultConfig) = $this->getConnection($input, $output);
         $fixtureDir = $input->getOption('dir') ? $input->getOption('dir') : $this->defaultFixturesDir;

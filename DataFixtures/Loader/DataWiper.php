@@ -20,7 +20,7 @@ class DataWiper extends AbstractDataLoader
      * @param array  $files          A set of files containing datas to load.
      * @param string $connectionName The Propel connection name
      */
-    public function load($files = array(), $connectionName)
+    public function load(array $files = [], string $connectionName)
     {
         $this->deletedClasses = array();
         $this->loadMapBuilders($connectionName);
@@ -59,7 +59,7 @@ class DataWiper extends AbstractDataLoader
      *
      * @return array
      */
-    protected function transformDataToArray($file)
+    protected function transformDataToArray(string $file): array
     {
         return array();
     }

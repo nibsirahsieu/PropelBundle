@@ -15,7 +15,7 @@ abstract class BaseAbstractType extends AbstractType
      *
      * @param array|null $mergeOptions
      */
-    public function __construct($mergeOptions = null)
+    public function __construct(?array $mergeOptions = null)
     {
         if ($mergeOptions) {
             $this->mergeOptions($mergeOptions);
@@ -28,7 +28,7 @@ abstract class BaseAbstractType extends AbstractType
      * @param mixed $value
      * @return void
      */
-    public function setOption($name, $value)
+    public function setOption(string $name, $value)
     {
         $this->options[$name] = $value;
     }
@@ -38,7 +38,7 @@ abstract class BaseAbstractType extends AbstractType
      * @param string $name
      * @return mixed
      */
-    public function getOption($name)
+    public function getOption(string $name)
     {
         return $this->options[$name];
     }
@@ -48,7 +48,7 @@ abstract class BaseAbstractType extends AbstractType
      * @param array $options
      * @return void
      */
-    public function setOptions($options)
+    public function setOptions(array $options)
     {
         $this->options = $options;
     }
@@ -57,7 +57,7 @@ abstract class BaseAbstractType extends AbstractType
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -67,7 +67,7 @@ abstract class BaseAbstractType extends AbstractType
      * @param array $options
      * @return void
      */
-    public function mergeOptions($options)
+    public function mergeOptions(array $options): void
     {
         $this->options = array_merge($this->options, $options);
     }
@@ -83,7 +83,7 @@ abstract class BaseAbstractType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getOption('name');
     }

@@ -36,9 +36,9 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
     private $cache = array();
 
     /**
-     * {@inheritdoc}
+     * @return TypeGuess|null
      */
-    public function guessType($class, $property)
+    public function guessType(string $class, string $property): ?TypeGuess
     {
         if (!$table = $this->getTable($class)) {
             return new TypeGuess(TextType::class, array(), Guess::LOW_CONFIDENCE);
@@ -118,9 +118,9 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return ValueGuess|null
      */
-    public function guessRequired($class, $property)
+    public function guessRequired(string $class, string $property): ?ValueGuess
     {
         if ($column = $this->getColumn($class, $property)) {
             return new ValueGuess($column->isNotNull(), Guess::HIGH_CONFIDENCE);
@@ -130,9 +130,9 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return ValueGuess|null
      */
-    public function guessMaxLength($class, $property)
+    public function guessMaxLength(string $class, string $property): ?ValueGuess
     {
         if ($column = $this->getColumn($class, $property)) {
             if ($column->isText()) {
@@ -151,9 +151,9 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return ValueGuess|null
      */
-    public function guessPattern($class, $property)
+    public function guessPattern(string $class, string $property): ?ValueGuess
     {
         if ($column = $this->getColumn($class, $property)) {
             switch ($column->getType()) {
@@ -174,7 +174,7 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
      *
      * @return \TableMap|null
      */
-    protected function getTable($class)
+    protected function getTable(string $class): ?\TableMap
     {
         if (isset($this->cache[$class])) {
             return $this->cache[$class];
@@ -196,7 +196,7 @@ class PropelTypeGuesser implements FormTypeGuesserInterface
      *
      * @return \ColumnMap|null
      */
-    protected function getColumn($class, $property)
+    protected function getColumn(string $class, string $property): ?\ColumnMap
     {
         if (isset($this->cache[$class.'::'.$property])) {
             return $this->cache[$class.'::'.$property];

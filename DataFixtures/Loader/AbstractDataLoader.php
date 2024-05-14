@@ -40,12 +40,12 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
      * @param  string $file A filename.
      * @return array
      */
-    abstract protected function transformDataToArray($file);
+    abstract protected function transformDataToArray(string $file): array;
 
     /**
      * {@inheritdoc}
      */
-    public function load($files = array(), $connectionName)
+    public function load(array $files = [], string $connectionName)
     {
         $nbFiles = 0;
         $this->deletedClasses = array();
@@ -83,7 +83,7 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
      *
      * @param array|null $data The data to delete
      */
-    protected function deleteCurrentData($data = null)
+    protected function deleteCurrentData(array $data = null)
     {
         if ($data !== null) {
             $classes = array_keys($data);
@@ -102,7 +102,7 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
      *
      * @param string $class Class name to delete
      */
-    protected function deleteClassData($class)
+    protected function deleteClassData(string $class)
     {
         // Check that peer class exists before calling doDeleteAll()
         $peerClass = constant($class.'::PEER');
@@ -130,7 +130,7 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
      *
      * @param array $data|null The data to be loaded
      */
-    protected function loadDataFromArray($data = null)
+    protected function loadDataFromArray(array $data = null)
     {
         if ($data === null) {
             return;
@@ -245,7 +245,7 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
      * @param string     $key   Key identifying specified object
      * @param BaseObject $obj   A Propel object
      */
-    protected function saveParentReference($class, $key, &$obj)
+    protected function saveParentReference(string $class, string $key, &$obj)
     {
         if (method_exists($obj, 'getPrimaryKey')) {
 
@@ -271,7 +271,8 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
      * @param string     $class Class name of the current object
      * @return array
      */
-    protected function getInheritedClasses($class) {
+    protected function getInheritedClasses(string $class): array 
+    {
         $reflectionClass = new \ReflectionClass($class);
         $classes = array();
 
@@ -291,7 +292,7 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
      * @param string     $middleTableName The middle table name
      * @param array      $values          An array of values
      */
-    protected function loadManyToMany($obj, $middleTableName, $values)
+    protected function loadManyToMany(BaseObject $obj, string $middleTableName, array $values)
     {
         $middleTable = $this->dbMap->getTable($middleTableName);
         $middleClass = $middleTable->getClassname();

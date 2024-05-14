@@ -23,7 +23,7 @@ class PropelInflector
      * @param  string $word The word to camelize.
      * @return string
      */
-    public static function camelize($word)
+    public static function camelize(string $word): string
     {
         return lcfirst(str_replace(" ", "", ucwords(strtr($word, "_-", "  "))));
     }

@@ -10,6 +10,7 @@
 namespace Propel\Bundle\PropelBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -28,11 +29,11 @@ class Configuration implements ConfigurationInterface
     /**
      * Constructor
      *
-     * @param Boolean $debug Wether to use the debug mode
+     * @param bool $debug Wether to use the debug mode
      */
-    public function  __construct($debug)
+    public function  __construct(bool $debug)
     {
-        $this->debug = (Boolean) $debug;
+        $this->debug = $debug;
     }
 
     /**
@@ -40,11 +41,10 @@ class Configuration implements ConfigurationInterface
      *
      * @return TreeBuilder The tree builder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('propel');
-        // BC layer for symfony/config < 4.2
-        $rootNode = method_exists($treeBuilder, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('propel');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->addGeneralSection($rootNode);
         $this->addDbalSection($rootNode);
@@ -66,7 +66,7 @@ class Configuration implements ConfigurationInterface
      *         fooable: My\FooableBehavior
      *         barable: src.barable.BarableBehavior
      */
-    private function addGeneralSection(ArrayNodeDefinition $node)
+    private function addGeneralSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -98,7 +98,7 @@ class Configuration implements ConfigurationInterface
      *         settings:    {}
      *         default_connection:  xxxxxx
      */
-   private function addDbalSection(ArrayNodeDefinition $node)
+   private function addDbalSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -171,13 +171,12 @@ class Configuration implements ConfigurationInterface
      *         attributes:  {}
      *         settings:    {}
      *
-     * @return TreeBuilder The tree builder
+     * @return NodeDefinition The tree builder
      */
-    private function getDbalConnectionsNode()
+    private function getDbalConnectionsNode(): NodeDefinition
     {
         $treeBuilder = new TreeBuilder('connections');
-        // BC layer for symfony/config < 4.2
-        $node = method_exists($treeBuilder, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('connections');
+        $node = $treeBuilder->getRootNode();
 
         $node
             ->requiresAtLeastOneElement()

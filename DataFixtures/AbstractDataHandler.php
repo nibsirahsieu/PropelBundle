@@ -35,7 +35,7 @@ abstract class AbstractDataHandler
      *
      * @param string $rootDir The root directory.
      */
-    public function __construct($rootDir)
+    public function __construct(string $rootDir)
     {
         $this->rootDir = $rootDir;
     }
@@ -43,7 +43,7 @@ abstract class AbstractDataHandler
     /**
      * @return string
      */
-    protected function getRootDir()
+    protected function getRootDir(): string
     {
         return $this->rootDir;
     }
@@ -53,7 +53,7 @@ abstract class AbstractDataHandler
      *
      * @param string|null $connectionName A connection name.
      */
-    protected function loadMapBuilders($connectionName = null)
+    protected function loadMapBuilders(string $connectionName = null): void
     {
         if (null !== $this->dbMap) {
             return;
@@ -81,9 +81,9 @@ abstract class AbstractDataHandler
      * Check if a table is in a database
      * @param  string  $class
      * @param  string  $connectionName
-     * @return boolean
+     * @return bool
      */
-    protected function isInDatabase($class, $connectionName)
+    protected function isInDatabase(string $class, string $connectionName): bool
     {
         $table = new $class();
 
@@ -98,7 +98,7 @@ abstract class AbstractDataHandler
      * @param string $shortClassName The short class name aka the filename without extension.
      * @return string|null
      */
-    private function guessFullClassName($path, $shortClassName)
+    private function guessFullClassName(string $path, string $shortClassName): ?string
     {
         $array = array();
         $path  = str_replace('/', '\\', $path);
@@ -126,9 +126,10 @@ abstract class AbstractDataHandler
      *
      * @param string $connectionName A connection name.
      *
-     * @return string[]
+     * @return array<string>
      */
-    protected function getModelSearchPaths($connectionName) {
+    protected function getModelSearchPaths(string $connectionName): array 
+    {
         $configuration = Propel::getConfiguration();
         $searchPath = array();
 

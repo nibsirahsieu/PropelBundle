@@ -47,7 +47,7 @@ class FixturesLoadCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Load XML, SQL and/or YAML fixtures')
@@ -115,7 +115,7 @@ EOT
      *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->filesystem = new Filesystem();
 
@@ -156,20 +156,21 @@ EOT
     /**
      * Load fixtures
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface   $input
-     * @param  \Symfony\Component\Console\Output\OutputInterface $output
+     * @param  InputInterface   $input
+     * @param  OutputInterface $output
      * @param string|null $type
      * @return int
      */
-    protected function loadFixtures(InputInterface $input, OutputInterface $output, $type = null)
+    protected function loadFixtures(InputInterface $input, OutputInterface $output, string $type = null): int
     {
         if (null === $type || !\in_array($type, ['yml', 'xml'], true)) {
             return -1;
         }
 
-        $datas = $this->getFixtureFiles($type);
+        $dataFixtures = $this->getFixtureFiles($type);
+        $datas = iterator_to_array($dataFixtures);
 
-        if (count(iterator_to_array($datas)) === 0) {
+        if (count($datas) === 0) {
             return -1;
         }
 
@@ -201,11 +202,11 @@ EOT
     /**
      * Load SQL fixtures
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface   $input
-     * @param  \Symfony\Component\Console\Output\OutputInterface $output
-     * @return void
+     * @param  InputInterface   $input
+     * @param  OutputInterface $output
+     * @return int
      */
-    protected function loadSqlFixtures(InputInterface $input, OutputInterface $output)
+    protected function loadSqlFixtures(InputInterface $input, OutputInterface $output): int
     {
         $tmpdir = $this->getApplication()->getKernel()->getProjectDir() . '/var/cache/propel';
         $datas  = $this->getFixtureFiles('sql');
@@ -244,7 +245,7 @@ EOT
      *
      * @param string $tmpdir The temporary directory path.
      */
-    protected function prepareCache($tmpdir)
+    protected function prepareCache(string $tmpdir): void
     {
         // Recreate a propel directory in cache
         $this->filesystem->remove($tmpdir);
@@ -260,7 +261,7 @@ EOT
      * 
      * @return bool
      */
-    protected function insertSql($config, $sqlDir, $schemaDir, $output)
+    protected function insertSql(array $config, string $sqlDir, string $schemaDir, OutputInterface $output): bool
     {
         // Insert SQL
         $ret = $this->callPhing('insert-sql', array(
@@ -292,7 +293,7 @@ EOT
      *
      * @return \Iterator An iterator through the files.
      */
-    protected function getFixtureFiles($type = 'sql', $in = null)
+    protected function getFixtureFiles(string $type = 'sql', $in = null): \Iterator
     {
         $finder = new Finder();
         $finder->sortByName()->name('*.' . $type);
@@ -318,7 +319,7 @@ EOT
      *
      * @return String
      */
-    protected function getFixturesPath(BundleInterface $bundle)
+    protected function getFixturesPath(BundleInterface $bundle): string
     {
         return $bundle->getPath() . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'fixtures';
     }

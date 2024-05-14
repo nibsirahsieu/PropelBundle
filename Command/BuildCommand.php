@@ -25,7 +25,7 @@ class BuildCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Hub for Propel build commands (Model classes, SQL)')
@@ -45,7 +45,7 @@ class BuildCommand extends AbstractCommand
      * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$input->getOption('sql')) {
             $in = new ArrayInput(array(

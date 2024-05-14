@@ -72,7 +72,7 @@ class PropelParamConverter implements ParamConverterInterface
      * @throws NotFoundHttpException
      * @throws \Exception
      */
-    public function apply(Request $request, ParamConverter $configuration)
+    public function apply(Request $request, ParamConverter $configuration): bool
     {
         $classQuery = $configuration->getClass() . 'Query';
         $classPeer = $configuration->getClass() . 'Peer';
@@ -145,7 +145,7 @@ class PropelParamConverter implements ParamConverterInterface
      *
      * @return bool
      */
-    public function supports(ParamConverter $configuration)
+    public function supports(ParamConverter $configuration): bool
     {
         if (null === ($classname = $configuration->getClass())) {
             return false;
@@ -170,7 +170,7 @@ class PropelParamConverter implements ParamConverterInterface
      *
      * @return mixed
      */
-    protected function findPk($classQuery, Request $request)
+    protected function findPk(string $classQuery, Request $request)
     {
         if (in_array($this->pk, $this->exclude) || !$request->attributes->has($this->pk)) {
             return false;
@@ -193,7 +193,7 @@ class PropelParamConverter implements ParamConverterInterface
      *
      * @return mixed
      */
-    protected function findOneBy($classQuery, Request $request)
+    protected function findOneBy(string $classQuery, Request $request)
     {
         $query = $this->getQuery($classQuery);
         $hasCriteria = false;
@@ -226,7 +226,7 @@ class PropelParamConverter implements ParamConverterInterface
      *
      * @throws \Exception
      */
-    protected function getQuery($classQuery)
+    protected function getQuery(string $classQuery): \ModelCriteria
     {
         $query = $classQuery::create();
 
@@ -258,7 +258,7 @@ class PropelParamConverter implements ParamConverterInterface
      *
      * @throws \Exception
      */
-    protected function getValidJoin($with)
+    protected function getValidJoin(array $with): string
     {
         switch (trim(str_replace(array('_', 'JOIN'), '', strtoupper($with[1])))) {
             case 'LEFT':

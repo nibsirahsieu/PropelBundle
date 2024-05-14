@@ -25,7 +25,7 @@ class ModelBuildCommand extends AbstractCommand
     /**
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Build the Propel Object Model classes based on XML schemas')
@@ -48,7 +48,7 @@ EOT
      * 
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (true === $this->callPhing('om')) {
             foreach ($this->tempSchemas as $schemaFile => $schemaDetails) {

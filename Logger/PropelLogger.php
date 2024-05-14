@@ -54,7 +54,7 @@ class PropelLogger implements \BasicLogger
         $this->stopwatch = $stopwatch;
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->queries = array();
     }
@@ -62,7 +62,7 @@ class PropelLogger implements \BasicLogger
     /**
      * {@inheritdoc}
      */
-    public function alert($message)
+    public function alert($message): void
     {
         $this->log($message, 'alert');
     }
@@ -70,7 +70,7 @@ class PropelLogger implements \BasicLogger
     /**
      * {@inheritdoc}
      */
-    public function crit($message)
+    public function crit($message): void
     {
         $this->log($message, 'crit');
     }
@@ -78,7 +78,7 @@ class PropelLogger implements \BasicLogger
     /**
      * {@inheritdoc}
      */
-    public function err($message)
+    public function err($message): void
     {
         $this->log($message, 'err');
     }
@@ -86,7 +86,7 @@ class PropelLogger implements \BasicLogger
     /**
      * {@inheritdoc}
      */
-    public function warning($message)
+    public function warning($message): void
     {
         $this->log($message, 'warning');
     }
@@ -94,7 +94,7 @@ class PropelLogger implements \BasicLogger
     /**
      * {@inheritdoc}
      */
-    public function notice($message)
+    public function notice($message): void
     {
         $this->log($message, 'notice');
     }
@@ -102,7 +102,7 @@ class PropelLogger implements \BasicLogger
     /**
      * {@inheritdoc}
      */
-    public function info($message)
+    public function info($message): void
     {
         $this->log($message, 'info');
     }
@@ -110,7 +110,7 @@ class PropelLogger implements \BasicLogger
     /**
      * {@inheritdoc}
      */
-    public function debug($message)
+    public function debug($message): void
     {
         $add = true;
 
@@ -139,7 +139,7 @@ class PropelLogger implements \BasicLogger
     /**
      * {@inheritdoc}
      */
-    public function log($message, $severity = null)
+    public function log($message, $severity = null): void
     {
         if (null !== $this->logger) {
             $message = is_string($message) ? $message : var_export($message, true);
@@ -175,7 +175,7 @@ class PropelLogger implements \BasicLogger
      *
      * @return array Queries
      */
-    public function getQueries()
+    public function getQueries(): array
     {
         return $this->queries;
     }

@@ -21,14 +21,14 @@ use Symfony\Component\Yaml\Yaml;
 class YamlDataLoader extends AbstractDataLoader
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     private $container;
 
     /**
      * {@inheritdoc}
      */
-    public function __construct($rootDir, ContainerInterface $container = null)
+    public function __construct(string $rootDir, ContainerInterface $container = null)
     {
         parent::__construct($rootDir);
 
@@ -38,7 +38,7 @@ class YamlDataLoader extends AbstractDataLoader
     /**
      * {@inheritdoc}
      */
-    protected function transformDataToArray($file)
+    protected function transformDataToArray(string $file): array
     {
         if (strpos($file, "\n") === false && is_file($file)) {
             if (false === is_readable($file)) {

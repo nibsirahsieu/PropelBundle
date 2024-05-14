@@ -59,7 +59,7 @@ class PropelChoiceLoader implements ChoiceLoaderInterface
      * @param \ModelCriteria    $queryObject
      * @param string            $useAsIdentifier
      */
-    public function __construct($class, \ModelCriteria $queryObject, $useAsIdentifier = null)
+    public function __construct(string $class, \ModelCriteria $queryObject, string $useAsIdentifier = null)
     {
         $this->class = $class;
         $this->query = $queryObject;
@@ -76,7 +76,7 @@ class PropelChoiceLoader implements ChoiceLoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function loadChoiceList($value = null)
+    public function loadChoiceList($value = null): ChoiceListInterface
     {
         if ($this->choiceList) {
             return $this->choiceList;
@@ -90,7 +90,7 @@ class PropelChoiceLoader implements ChoiceLoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function loadChoicesForValues(array $values, $value = null)
+    public function loadChoicesForValues(array $values, $value = null): array
     {
         // Performance optimization
         if (empty($values)) {
@@ -127,7 +127,7 @@ class PropelChoiceLoader implements ChoiceLoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function loadValuesForChoices(array $choices, $value = null)
+    public function loadValuesForChoices(array $choices, $value = null): array
     {
         // Performance optimization
         if (empty($choices)) {
@@ -160,7 +160,7 @@ class PropelChoiceLoader implements ChoiceLoaderInterface
      *
      * @return bool
      */
-    private function isScalar(\ColumnMap $column)
+    private function isScalar(\ColumnMap $column): bool
     {
         return in_array(
             $column->getPdoType(),
@@ -183,7 +183,7 @@ class PropelChoiceLoader implements ChoiceLoaderInterface
      *
      * @return array
      */
-    private function getIdentifierValues($model)
+    private function getIdentifierValues($model): array
     {
         if (!$model instanceof $this->class) {
             return array();

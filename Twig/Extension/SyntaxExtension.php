@@ -25,7 +25,7 @@ class SyntaxExtension extends AbstractExtension
      *
      * @return array
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return array(
             new TwigFilter('format_sql', array($this, 'formatSQL'), array('is_safe' => array('html'))),
@@ -36,7 +36,7 @@ class SyntaxExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'propel_syntax_extension';
     }
@@ -46,7 +46,7 @@ class SyntaxExtension extends AbstractExtension
      * @param string $sql
      * @return string
      */
-    public function formatSQL($sql)
+    public function formatSQL(string $sql): string
     {
         // list of keywords to prepend a newline in output
         $newlines = array(

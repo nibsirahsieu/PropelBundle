@@ -51,7 +51,7 @@ class PropelUserProvider implements UserProviderInterface
      * @param string      $class    The User model class.
      * @param string|null $property The property to use to retrieve a user.
      */
-    public function __construct($class, $property = null)
+    public function __construct(string $class, string $property = null)
     {
         $this->class = $class;
         $this->queryClass = $class.'Query';
@@ -61,7 +61,7 @@ class PropelUserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername(string $username): UserInterface
     {
         return $this->loadUserByIdentifier($username);
     }
@@ -92,7 +92,7 @@ class PropelUserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof $this->class) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
@@ -106,7 +106,7 @@ class PropelUserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsClass($class)
+    public function supportsClass(string $class): bool
     {
         return $class === $this->class;
     }
