@@ -33,7 +33,7 @@ class PropelFactory implements UserProviderFactoryInterface
     {
     }
 
-    public function create(ContainerBuilder $container, $id, $config)
+    public function create(ContainerBuilder $container, string $id, array $config): void
     {
         $container
             ->setDefinition($id, new ChildDefinition($this->providerId))
@@ -42,12 +42,12 @@ class PropelFactory implements UserProviderFactoryInterface
         ;
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    public function addConfiguration(NodeDefinition $node)
+    public function addConfiguration(NodeDefinition $node): void
     {
         $node
             ->children()
