@@ -5,6 +5,8 @@ on:
 jobs:
   qodana:
     runs-on: ubuntu-latest
+    env:
+      QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
 
     strategy:
       fail-fast: false
@@ -52,8 +54,7 @@ jobs:
         working-directory: ./
 
       - name: 'Qodana Scan'
+        if: ${{ env.QODANA_TOKEN != '' }}
         uses: JetBrains/qodana-action@v2024.1
         with:
           args: --baseline,qodana.sarif.json
-        env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
