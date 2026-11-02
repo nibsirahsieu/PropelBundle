@@ -44,7 +44,7 @@ class PropelDataCollector extends DataCollector
         $this->propelConfiguration = $propelConfiguration;
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->logger->reset();
     }
@@ -52,7 +52,7 @@ class PropelDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
     {
         $this->data = [
             'queries' => $this->buildQueries(),
