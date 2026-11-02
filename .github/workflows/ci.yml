@@ -16,9 +16,8 @@ jobs:
           - '8.4'
         symfony_version:
           - '6.4.*'
-          - '7.0.*'
-          - '7.1.*'
           - '7.2.*'
+          - '7.4.*'
 #        deps:
 #          - 'highest'
 #          - 'lowest'
@@ -54,15 +53,13 @@ jobs:
           sed -i 's|\("symfony/.*"\): ".*"|\1: "${{ matrix.symfony_version }}"|' composer.json
         working-directory: ./
 
-      - name: Validate composer.json and composer.lock
+      - name: Validate composer.json
         run: composer validate
         working-directory: ./
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v3
-        with:
-#          dependency-versions: '${{ matrix.deps }}'
-          working-directory: ./
+        run: composer update --no-interaction --prefer-dist --no-progress --no-security-blocking
+        working-directory: ./
 
       - name: Run Tests
         run: composer run-script ci-test
